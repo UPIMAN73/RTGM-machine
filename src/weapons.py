@@ -5,12 +5,13 @@
 ## Weapon Abilities:
 ## poison, fire, water, wind, earth, lightning, darkness, death, critical, magic boost
 class Weapons:
-    def __init__(self, name="", msg="", atk=0, abl={"fire": 0, "water": 0, "earth": 0, "lightning": 0, "darkness": 0, "death": 0, "critical": 0, "magic boost": 0}):
+    def __init__(self, name="", msg="", atk=0, abl={"fire": 0, "water": 0, "earth": 0, "lightning": 0, "darkness": 0, "death": 0, "critical": 0, "magic boost": 0}, price={"buy":0, "sell":0}):
         self.info = {
             "name": name,
             "description": msg,
             "atk": atk,
-            "abilities": abl
+            "abilities": abl,
+            "price": price
         }
 
     def get(self, arg):

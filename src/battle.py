@@ -2,6 +2,7 @@
 ## Battle loop handler
 
 import random
+from ih import InventoryHandler
 # from ph import PlayerHandler
 # from eh import EnemyHandler
 
@@ -18,6 +19,7 @@ class Battle:
         self.en_blocked = False
     
     def __del__(self):
+        self.ui = None
         self.ph = None
         self.eh = None
         self.turn = None
@@ -59,11 +61,19 @@ class Battle:
             return 2
 
     def battlePrompt(self):
-        choices = {"attack": self.attack, "block": self.block, "run": self.run}
+        choices = {"attack": self.attack, "block": self.block, "inventory":self.inventory, "run": self.run}
         user_input = None
         while user_input not in choices.keys():
-            print("Choices: attack, block, run")
+            print("Choices: attack, block, inventory, run")
             user_input = raw_input("> ")
+            if len(user_input) == 1:
+                for i in choices.keys():
+                    if user_input == i[0]:
+                        user_input = i
+                    else:
+                        continue
+            elif user_input in choices.keys():
+                break
         choices.get(user_input, lambda: "INVALID OPTION")()
 
     def aiChoice(self):
@@ -190,3 +200,8 @@ class Battle:
         print("Name: " + self.eh.pl.get("name"))
         print("HP: " + str(self.eh.pl.get("hp")))
         print("Mp: " + str(self.eh.pl.get("mp")))
+    
+    def inventory(self):
+        inv = InventoryHandler(self.ph)
+        inv.inventoryLoop()
+        inv = None

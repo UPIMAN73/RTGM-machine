@@ -1,22 +1,13 @@
-def thelp():
-    print("help")
-
-def tsave():
-    print("save")
+test = {"hello": "hello", "goodbye": "goodbye", "seeya": "see ya!"}
 
 user_input = ""
-commands = {"help":thelp, "save":tsave, "quit":exit}
-user_loop = True
-
-try:
-    while user_input != "bla":
-        user_input = raw_input("> ")
-        print(user_input)
-        if (user_input in commands):
-            commands[user_input]()
-        else:
-            print("Command does not exist")
-            commands.get("help", lambda:"INVALID")()
-
-finally:
-    print("GOOD BYE")
+while user_input != "q":
+    user_input = str(raw_input("> "))
+    if user_input == "q":
+        break
+    for i in test.keys():
+        if len(user_input) == 1 and user_input == i[0]:
+            user_input = i
+    if user_input in test:
+        print(test[user_input])
+print("done") 

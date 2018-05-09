@@ -15,14 +15,18 @@ from enemy import Enemy
 from weapons import Weapons
 from item import Item, Potions
 from armor import Armor
+from store import Store
 
 # Game Objects handler
 from ph import PlayerHandler
 from eh import EnemyHandler
 from fh import FileHandler
+from sh import StoreHandler
+from ih import InventoryHandler
 
 # Command based 
 from battle import Battle
+
 
 #from command import Command
 from ui import UserInterface
@@ -35,7 +39,8 @@ class Game:
         self.map = Map()
         self.ph = PlayerHandler()
         self.eh = EnemyHandler()
-        self.ui = UserInterface(ph=self.ph, eh=self.eh)
+        self.game_name = "test"
+        self.ui = UserInterface(ph=self.ph, eh=self.eh, defDir=str("~/rtgm/games/" + self.game_name))
 
     # def __del__(self): 
         # self.pl = None
@@ -45,25 +50,25 @@ class Game:
         # self.ui = None 
 
     def mapSetup(self):
-        # self.map.setV("name", "earth")
-        # self.map.setV("msg", "This planet is named Earth. There are many mysteries that lie inside of this planet. ")
+        self.map.setV("name", "earth")
+        self.map.setV("msg", "This planet is named Earth. There are many mysteries that lie inside of this planet. ")
         # self.ph.mh.map = self.map
         self.ph.mh.loadMap("earth.json")
 
     def plSetup(self):
-        name = "Joshua"
-        pclass = "Demon Slayer"
-        self.pl = Player(name, pclass)
-        self.pl.setV("equipped", {"weapon": Weapons(name="death scyth", atk=15), "talisman": Item(), "bracelet": Item(), "ring": Item()})
-        self.ph = PlayerHandler(pl=self.pl)
+        from pc import PlayerCreator
+        plc = PlayerCreator()
+        plc.createLoop()
+        self.pl = plc.pl
+        self.ph = PlayerHandler(self.pl)
     
     def createEnemy(self):
         return Enemy(name="goblin", mhp=100, atk=8, pdef=4, spd=10)
     
     def uiTest(self):
-        self.plSetup()
+        # self.plSetup()
         self.ui = UserInterface(ph=self.ph, eh=self.eh)
-        #self.ui.UILoop()
+        self.ui.UILoop()
 
     def enemySetup(self):
         enemy = self.createEnemy()
@@ -72,6 +77,16 @@ class Game:
     def battleTest(self):
         battle = Battle(self.ph, self.eh)
         battle.battleLoop()
+    
+    def storeSetup(self):
+        store = Store(name="Shop", des="Just an average shop")
+        store.get("inventory")["items"].append(Item(name="testitem", des="This item is test item."))
+        sh = StoreHandler(self.ph, store)
+        sh.storeLoop()
+    
+    def inventorySetup(self):
+        inventory = InventoryHandler(self.ph)
+        inventory.inventoryLoop()
 
 # import json
 
@@ -88,7 +103,9 @@ game = Game()
 game.mapSetup()
 game.plSetup()
 game.uiTest()
-game.ui.UILoop()
+
+#game.storeSetup()
+# game.inventorySetup()
 #game.ui.saveGame()
 #game.ui.loadGame()
 #game.ui.loadGame()

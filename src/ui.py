@@ -2,18 +2,23 @@
 ## Deals with user input, user handling, and command based objects within the game
 
 # Game Objects
+from map import Map, Level
 from player import Player
 from enemy import Enemy
 from weapons import Weapons
 from item import Item, Potions
+from armor import Armor
+from store import Store
 
 
 # Game Objects handler
 from ph import PlayerHandler
 from eh import EnemyHandler
 from fh import FileHandler
+from sh import StoreHandler
+from ih import InventoryHandler
 
-# Command based 
+# Command based
 from battle import Battle
 
 # System based
@@ -25,12 +30,13 @@ class UserInterface:
         # Game Objects
         self.ph = ph
         self.eh = eh
+        self.eh.pl = Enemy(name="goblin", mhp=100, atk=8, pdef=4, spd=10)
 
         # Command Line Interface
         self.defDir = defDir
         self.quitcmd = ["quit", "exit", "q"]
-        self.defcommands = {"help":self.displayHelp, "save":self.saveGame, "load":self.loadGame, "play":self.playGame}
-        self.commands = {}
+        self.defcommands = {"help":self.displayHelp, "save":self.saveGame, "load":self.loadGame, "play":self.playGame, "inventory":self.inventory, "i":self.inventory}
+        self.commands = {"battle":self.battle, "fight":self.battle}
         if (self.ph.mh != None):
             inputs = self.ph.mh.current_location.get("commands")["inputs"]
             if len(inputs) > 0:
@@ -160,4 +166,9 @@ class UserInterface:
             print("You ran away...")
         else:
             print("Battle broken")
+    
+    def inventory(self):
+        inv = InventoryHandler(self.ph)
+        inv.inventoryLoop()
+        inv = None
             
