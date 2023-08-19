@@ -1,8 +1,8 @@
 package main
 
+// Package Imports
 import (
 	"fmt"
-
 	"Map"
 )
 
@@ -60,7 +60,9 @@ type Character struct {
 
 func main() {
 	// Example usage:
-	cur_world := Map.World{Key: 1, Name: "test", Description: "Test World!"}
+	cur_zone := Map.Zone{Name: "", Description: "Test Zone!", Connections: []}
+	cur_region := Map.Region{Name: "Region 00", Description: "Test Region!"}
+	cur_world := Map.World{Name: "test", Description: "Test World!"}
 
 	// Create a skill
 	fireball := Skill{Name: "Fireball", Description: "Throw a fiery ball.", Power: 50, Cooldown: 2}
@@ -82,5 +84,7 @@ func main() {
 
 	// Print character's name and weapon
 	fmt.Println(character.Name + " wields the " + character.Weapon.Name)
-	fmt.Println(cur_world.Key)
+	fmt.Println(cur_zone)
+	fmt.Println(cur_region)
+	fmt.Println(cur_world)
 }

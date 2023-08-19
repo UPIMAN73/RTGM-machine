@@ -10,19 +10,20 @@ type Position struct {
 type Zone struct {
 	Name        string
 	Description string
-	Connections []Position // Position Connections to other Nodes
+	// Position Connections to other Zones (this includes other Regions & Worlds as well)
+	Connections []Position 
 }
 
 // Region Structure
 type Region struct {
 	Name        string
 	Description string
-	// Zones
+	zones = map[uint16]Zone	// Zones
 }
 
 // World Structure
 type World struct {
 	Name        string
 	Description string
-	// Regions
+	Regions = map[uint16]Region	// Regions
 }
