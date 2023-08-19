@@ -1,0 +1,54 @@
+{
+  "Worlds": {
+    "1": {
+      "Name": "Earth",
+      "Description": "The third planet from the sun.",
+      "Regions": {
+        "10": {
+          "Name": "NorthAmerica",
+          "Description": "A continent in the Northern Hemisphere.",
+          "Zones": {
+            "100": {
+              "Name": "USA",
+              "Description": "United States of America",
+              "Connections": []
+            },
+            "101": {
+              "Name": "Canada",
+              "Description": "Country in North America",
+              "Connections": [
+                {
+                  "World": 1,
+                  "Region": 11,
+                  "Zone": 110
+                }
+              ]
+            }
+          }
+        },
+        "11": {
+          "Name": "Asia",
+          "Description": "Largest continent on Earth.",
+          "Zones": {
+            "110": {
+              "Name": "China",
+              "Description": "Country in East Asia",
+              "Connections": [
+                {
+                  "World": 1,
+                  "Region": 10,
+                  "Zone": 101
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "2": {
+      "Name": "Mars",
+      "Description": "The fourth planet from the sun.",
+      "Regions": {}
+    }
+  }
+}
